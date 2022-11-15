@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: Material(
         child: Center(
-          child: Text("This is another one),
-          ),
+          child: Text("This is another one"),
+        ),
       ),
     );
   }
