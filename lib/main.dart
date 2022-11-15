@@ -1,22 +1,16 @@
+import 'package:basic_flutter/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
-      home: Material(
-        child: Center(
-          child: Text("This is another one"),
-        ),
-      ),
+      home: HomeScreen(),
     );
   }
 }
