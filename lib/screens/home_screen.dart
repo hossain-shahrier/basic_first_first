@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Lagbe"),
       ),
-      drawer: const Drawer(),
+      // drawer: const Drawer(),
       body: Center(
         child: Text("Welcome to $days days of $name"),
       ),
