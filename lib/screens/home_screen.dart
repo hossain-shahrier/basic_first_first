@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../utils/routes.dart';
+
 class HomeScreen extends StatelessWidget {
   final int days = 30;
-  final String name = "flutter";
+  final String name = "dart";
 
   const HomeScreen({super.key});
   @override
@@ -13,7 +15,20 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: const Drawer(),
       body: Center(
-        child: Text("Welcome to $days days of $name"),
+        child: Column(children: [
+          ElevatedButton(
+            style: TextButton.styleFrom(
+              minimumSize: const Size(150, 40),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                MyRoutes.loginRoute,
+              );
+            },
+            child: const Text("login"),
+          )
+        ]),
       ),
     );
   }
