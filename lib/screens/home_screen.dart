@@ -1,3 +1,4 @@
+import 'package:basic_flutter/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Lagbe"),
       ),
-      // drawer: const Drawer(),
+      drawer: const MyDrawer(),
       body: Center(
         child: Text("Welcome to $days days of $name"),
       ),
