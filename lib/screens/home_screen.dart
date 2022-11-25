@@ -1,71 +1,75 @@
-import 'dart:convert';
-
-import 'package:basic_flutter/models/catalog.dart';
-import 'package:basic_flutter/utils/routes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../widgets/home_widgets/catalog_header.dart';
-import '../widgets/home_widgets/catalog_list.dart';
+import '../../models/catalog.dart';
+import '../../widgets/themes.dart';
+import 'catalog_image.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final int days = 30;
-
-  final String name = "flutter";
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  loadData() async {
-    await Future.delayed(const Duration(seconds: 2));
-    final catalogJson =
-        await rootBundle.loadString("assets/files/catalog.json");
-    final decodedData = jsonDecode(catalogJson);
-    var productsData = decodedData["products"];
-    CatalogModel.items = List.from(productsData)
-        .map<Item>((item) => Item.fromMap(item))
-        .toList();
-    setState(() {});
-  }
+class CatalogList extends StatelessWidget {
+  const CatalogList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.cardColor,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: context.theme.buttonColor,
-        onPressed: () => Navigator.pushNamed(context, MyRoutes.cartRoute),
-        child: const Icon(
-          CupertinoIcons.cart,
-          color: Colors.white,
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-            padding: Vx.m32,
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: CatalogModel.items.length,
+      itemBuilder: (context, index) {
+        final catalog = CatalogModel.items[index];
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeDetailScreen(
+                  catalog: catalog,
+                ),
+              ),
+            );
+          },
+          child: CatalogItem(catalog: catalog),
+        );
+      },
+    );
+  }
+}
+
+//Item
+class CatalogItem extends StatelessWidget {
+  final Item catalog;
+  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CatalogHeader(),
-                if (CatalogModel.items.isNotEmpty)
-                  const CatalogList().py16().expand()
-                else
-                  const CircularProgressIndicator().centered().expand(),
+                catalog.name.text.lg.color(MyTheme.darkBluishColor).bold.make(),
+                catalog.desc.text.textStyle(context.captionStyle).make(),
+                10.heightBox,
+                ButtonBar(
+                  alignment: MainAxisAlignment.spaceBetween,
+                  buttonPadding: EdgeInsets.zero,
+                  children: [
+                    "Tk. ${catalog.price}".text.bold.make(),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          MyTheme.darkBluishColor,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          const StadiumBorder(),
+                        ),
+                      ),
+                      child: "Buy".text.make(),
+                    )
+                  ],
+                ).pOnly(right: 8.0)
               ],
-            )),
+            ),
+          )
+        ],
       ),
-    );
+    ).white.rounded.square(150).make().py16();
   }
 }
