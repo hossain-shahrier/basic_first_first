@@ -1,10 +1,10 @@
 //List
 import 'package:basic_flutter/screens/home_detail_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
-import '../../widgets/themes.dart';
 import 'catalog_image.dart';
 
 class CatalogList extends StatelessWidget {
@@ -57,7 +57,7 @@ class CatalogItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                catalog.name.text.lg.color(MyTheme.darkBluishColor).bold.make(),
+                catalog.name.text.lg.color(context.accentColor).bold.make(),
                 catalog.desc.text.textStyle(context.captionStyle).make(),
                 10.heightBox,
                 ButtonBar(
@@ -69,13 +69,18 @@ class CatalogItem extends StatelessWidget {
                       onPressed: () {},
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          MyTheme.darkBluishColor,
-                        ),
+                            context.theme.buttonColor),
                         shape: MaterialStateProperty.all(
                           const StadiumBorder(),
                         ),
                       ),
-                      child: "Buy".text.make(),
+                      child: Row(
+                        children: [
+                          const Icon(CupertinoIcons.add).iconSize(15),
+                          const SizedBox(width: 2),
+                          "Cart".text.make(),
+                        ],
+                      ),
                     )
                   ],
                 ).pOnly(right: 8.0)
@@ -84,6 +89,6 @@ class CatalogItem extends StatelessWidget {
           )
         ],
       ),
-    ).white.rounded.square(150).make().py16();
+    ).color(context.cardColor).rounded.square(150).make().py16();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:basic_flutter/models/catalog.dart';
-import 'package:basic_flutter/widgets/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -12,11 +12,11 @@ class HomeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyTheme.creamColor,
+        backgroundColor: Colors.transparent,
       ),
-      backgroundColor: MyTheme.creamColor,
+      backgroundColor: context.canvasColor,
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: context.cardColor,
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
@@ -26,13 +26,19 @@ class HomeDetailScreen extends StatelessWidget {
               onPressed: () {},
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  MyTheme.darkBluishColor,
+                  context.theme.buttonColor,
                 ),
                 shape: MaterialStateProperty.all(
                   const StadiumBorder(),
                 ),
               ),
-              child: "Buy".text.make(),
+              child: Row(
+                children: [
+                  const Icon(CupertinoIcons.add),
+                  const SizedBox(width: 5),
+                  "Cart".text.lg.make(),
+                ],
+              ),
             ).wh(100, 50)
           ],
         ).p32(),
@@ -53,18 +59,23 @@ class HomeDetailScreen extends StatelessWidget {
                 arcType: VxArcType.CONVEY,
                 edge: VxEdge.TOP,
                 child: Container(
-                  color: Colors.white,
+                  color: context.cardColor,
                   width: context.screenWidth,
                   child: Column(
                     children: [
                       catalog.name.text.xl2
-                          .color(MyTheme.darkBluishColor)
+                          .color(context.accentColor)
                           .bold
                           .make(),
                       catalog.desc.text.lg
                           .textStyle(context.captionStyle)
                           .make(),
                       10.heightBox,
+                      "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
+                          .text
+                          .textStyle(context.captionStyle)
+                          .make()
+                          .p20()
                     ],
                   ).py64(),
                 ),
