@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
 import '../../widgets/themes.dart';
-import 'catalog_image.dart';
+import '../widgets/home_widgets/catalog_image.dart';
 
 class CatalogList extends StatelessWidget {
   const CatalogList({Key? key}) : super(key: key);
