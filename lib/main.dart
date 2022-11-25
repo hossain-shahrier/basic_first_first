@@ -1,3 +1,4 @@
+import 'package:basic_flutter/screens/cart_screen.dart';
 import 'package:basic_flutter/screens/home_screen.dart';
 import 'package:basic_flutter/screens/login_screen.dart';
 import 'package:basic_flutter/utils/routes.dart';
@@ -15,15 +16,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/login",
       routes: {
         "/": (context) => const LoginScreen(),
         MyRoutes.homeRoute: (context) => const HomeScreen(),
         MyRoutes.loginRoute: (context) => const LoginScreen(),
+        MyRoutes.cartRoute: (context) => const CartScreen(),
       },
     );
   }
