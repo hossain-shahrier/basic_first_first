@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:basic_flutter/models/catalog.dart';
-import 'package:basic_flutter/widgets/drawer.dart';
+import 'package:basic_flutter/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../widgets/home_widgets/catalog_header.dart';
+import '../widgets/home_widgets/catalog_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,55 +42,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Lagbe"),
-      ),
-      drawer: const MyDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: (CatalogModel.items != null && CatalogModel.items.isNotEmpty)
-            ? GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                ),
-                itemBuilder: (context, index) {
-                  final item = CatalogModel.items[index];
-                  return Card(
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: GridTile(
-                      header: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration:
-                            const BoxDecoration(color: Colors.deepPurple),
-                        child: Text(
-                          item.name,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      footer: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: const BoxDecoration(color: Colors.black),
-                        child: Text(
-                          item.price.toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      child: Image.network(
-                        item.image,
-                      ),
-                    ),
-                  );
-                },
-                itemCount: CatalogModel.items.length,
-              )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+      backgroundColor: MyTheme.creamColor,
+      body: SafeArea(
+        child: Container(
+            padding: Vx.m32,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CatalogHeader(),
+                if (CatalogModel.items.isNotEmpty)
+                  const CatalogList().py16().expand()
+                else
+                  const CircularProgressIndicator().centered().expand(),
+              ],
+            )),
       ),
     );
   }
